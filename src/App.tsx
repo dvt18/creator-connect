@@ -3,8 +3,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import FeedPage from "./pages/FeedPage";
+import CreatorProfilePage from "./pages/CreatorProfilePage";
+import BrandProfilePage from "./pages/BrandProfilePage";
+import DiscoverPage from "./pages/DiscoverPage";
+import CampaignsPage from "./pages/CampaignsPage";
+import CampaignDetailsPage from "./pages/CampaignDetailsPage";
+import MessagesPage from "./pages/MessagesPage";
+import CreatorDashboard from "./pages/CreatorDashboard";
+import BrandDashboard from "./pages/BrandDashboard";
+import NotificationsPage from "./pages/NotificationsPage";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +26,18 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/profile/creator/:id" element={<CreatorProfilePage />} />
+          <Route path="/profile/brand/:id" element={<BrandProfilePage />} />
+          <Route path="/discover" element={<DiscoverPage />} />
+          <Route path="/campaigns" element={<CampaignsPage />} />
+          <Route path="/campaign/:id" element={<CampaignDetailsPage />} />
+          <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/creator-dashboard" element={<CreatorDashboard />} />
+          <Route path="/brand-dashboard" element={<BrandDashboard />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
