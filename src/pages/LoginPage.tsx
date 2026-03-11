@@ -1,17 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Zap, Mail } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [role, setRole] = useState<"creator" | "brand">("creator");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    login(role);
+    navigate(role === "brand" ? "/brand-dashboard" : "/feed");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background gradient-hero px-4">
-      <div className="w-full max-w-md">
+      <motion.div
+        className="w-full max-w-md"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <Link to="/" className="flex items-center gap-2 font-bold text-lg justify-center mb-8">
           <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center">
             <Zap className="h-4 w-4 text-primary-foreground" />
@@ -33,7 +48,7 @@ export default function LoginPage() {
               <button
                 key={r}
                 onClick={() => setRole(r)}
-                className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`flex-1 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
                   role === r
                     ? "bg-card text-card-foreground shadow-sm"
                     : "text-muted-foreground"
@@ -44,20 +59,18 @@ export default function LoginPage() {
             ))}
           </div>
 
-          <form
-            className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              window.location.href = "/feed";
-            }}
-          >
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {mode === "signup" && (
-              <div>
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+              >
                 <Label htmlFor="name" className="text-card-foreground">
                   {role === "creator" ? "Full Name" : "Company Name"}
                 </Label>
                 <Input id="name" placeholder={role === "creator" ? "John Doe" : "Acme Inc."} className="mt-1" />
-              </div>
+              </motion.div>
             )}
             <div>
               <Label htmlFor="email" className="text-card-foreground">Email</Label>
@@ -88,7 +101,7 @@ export default function LoginPage() {
             </button>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

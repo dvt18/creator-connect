@@ -1,21 +1,40 @@
-import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Compass, MessageCircle, Bell, User, LayoutDashboard, Menu, X, Zap } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home, Search, Compass, MessageCircle, Bell, User, LayoutDashboard, Menu, X, Zap, LogOut, Building2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-const navItems = [
-  { to: "/feed", icon: Home, label: "Feed" },
-  { to: "/discover", icon: Search, label: "Discover" },
-  { to: "/campaigns", icon: Compass, label: "Campaigns" },
-  { to: "/messages", icon: MessageCircle, label: "Messages" },
-  { to: "/notifications", icon: Bell, label: "Notifications" },
-  { to: "/creator-dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/profile/creator/1", icon: User, label: "Profile" },
-];
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { role, isLoggedIn, logout } = useAuth();
+
+  const creatorNav = [
+    { to: "/feed", icon: Home, label: "Feed" },
+    { to: "/discover", icon: Search, label: "Discover" },
+    { to: "/campaigns", icon: Compass, label: "Campaigns" },
+    { to: "/messages", icon: MessageCircle, label: "Messages" },
+    { to: "/notifications", icon: Bell, label: "Notifications" },
+    { to: "/creator-dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { to: "/profile/creator/1", icon: User, label: "Profile" },
+  ];
+
+  const brandNav = [
+    { to: "/feed", icon: Home, label: "Feed" },
+    { to: "/discover", icon: Search, label: "Find Creators" },
+    { to: "/brand-dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { to: "/messages", icon: MessageCircle, label: "Messages" },
+    { to: "/notifications", icon: Bell, label: "Notifications" },
+    { to: "/profile/brand/1", icon: Building2, label: "Profile" },
+  ];
+
+  const navItems = role === "brand" ? brandNav : creatorNav;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
@@ -46,6 +65,15 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {isLoggedIn && (
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden lg:inline">Logout</span>
+              </button>
+            )}
           </div>
 
           <Button
@@ -80,6 +108,15 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {isLoggedIn && (
+              <button
+                onClick={() => { handleLogout(); setMobileOpen(false); }}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-muted-foreground hover:text-foreground hover:bg-secondary"
+              >
+                <LogOut className="h-5 w-5" />
+                Logout
+              </button>
+            )}
           </div>
         </div>
       )}
