@@ -1,11 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Search, Compass, MessageCircle, Bell, User, LayoutDashboard, Menu, X, Zap, LogOut, Building2 } from "lucide-react";
-import { useState } from "react";
+import { Home, Search, Compass, MessageCircle, Bell, User, LayoutDashboard, Zap, LogOut, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { role, isLoggedIn, logout } = useAuth();
@@ -37,89 +35,56 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      <nav className="sticky top-0 z-50 glass border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="text-foreground">CreatorHub</span>
-          </Link>
-
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
-              const active = location.pathname === item.to || location.pathname.startsWith(item.to + "/");
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    active
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                  }`}
-                >
-                  <item.icon className="h-4 w-4" />
-                  <span className="hidden lg:inline">{item.label}</span>
-                </Link>
-              );
-            })}
-            {isLoggedIn && (
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-              >
-                <LogOut className="h-4 w-4" />
-                <span className="hidden lg:inline">Logout</span>
-              </button>
-            )}
+    <nav className="sticky top-0 z-50 glass border-b border-border">
+      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-2 font-bold text-lg">
+          <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center">
+            <Zap className="h-4 w-4 text-primary-foreground" />
           </div>
+          <span className="text-foreground">CreatorHub</span>
+        </Link>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+        {/* Mobile: only show chat button */}
+        <div className="flex md:hidden items-center gap-1">
+          {isLoggedIn && (
+            <Button variant="ghost" size="icon" asChild>
+              <Link to="/messages">
+                <MessageCircle className="h-5 w-5 text-foreground" />
+              </Link>
+            </Button>
+          )}
         </div>
-      </nav>
 
-      {mobileOpen && (
-        <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm md:hidden pt-14">
-          <div className="flex flex-col gap-1 p-4">
-            {navItems.map((item) => {
-              const active = location.pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    active
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                  }`}
-                >
-                  <item.icon className="h-5 w-5" />
-                  {item.label}
-                </Link>
-              );
-            })}
-            {isLoggedIn && (
-              <button
-                onClick={() => { handleLogout(); setMobileOpen(false); }}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-muted-foreground hover:text-foreground hover:bg-secondary"
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
+          {navItems.map((item) => {
+            const active = location.pathname === item.to || location.pathname.startsWith(item.to + "/");
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  active
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
               >
-                <LogOut className="h-5 w-5" />
-                Logout
-              </button>
-            )}
-          </div>
+                <item.icon className="h-4 w-4" />
+                <span className="hidden lg:inline">{item.label}</span>
+              </Link>
+            );
+          })}
+          {isLoggedIn && (
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden lg:inline">Logout</span>
+            </button>
+          )}
         </div>
-      )}
-    </>
+      </div>
+    </nav>
   );
 }

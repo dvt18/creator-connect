@@ -16,7 +16,7 @@ export default function BrandProfilePage() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pb-mobile-nav">
         <Navbar />
         <div className="max-w-3xl mx-auto px-4 py-8">
           <motion.div

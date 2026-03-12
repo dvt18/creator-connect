@@ -18,6 +18,7 @@ import CreatorDashboard from "./pages/CreatorDashboard";
 import BrandDashboard from "./pages/BrandDashboard";
 import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
+import MobileBottomNav from "./components/MobileBottomNav";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AnimatePresence>
+          <MobileBottomNav />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>

@@ -7,7 +7,7 @@ import PageTransition from "@/components/PageTransition";
 export default function CampaignsPage() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pb-mobile-nav">
         <Navbar />
         <div className="max-w-6xl mx-auto px-4 py-8">
           <h1 className="text-2xl font-bold text-foreground mb-6">Campaign Marketplace</h1>

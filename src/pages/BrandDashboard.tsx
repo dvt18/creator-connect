@@ -8,7 +8,7 @@ import PageTransition from "@/components/PageTransition";
 export default function BrandDashboard() {
   return (
     <PageTransition>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pb-mobile-nav">
         <Navbar />
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex items-center justify-between mb-6">
