@@ -11,7 +11,7 @@ export default function MobileBottomNav() {
   const creatorNav = [
     { to: "/feed", icon: Home, label: "Home" },
     { to: "/discover", icon: Search, label: "Discover" },
-    { to: "/campaigns", icon: Compass, label: "Campaigns" },
+    { to: "/creator-dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { to: "/notifications", icon: Bell, label: "Alerts" },
     { to: "/profile/creator/1", icon: User, label: "Profile" },
   ];
