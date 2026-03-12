@@ -129,3 +129,9 @@
     @apply bg-card/80 backdrop-blur-lg;
   }
 }
+
+@layer utilities {
+  .pb-mobile-nav {
+    @apply pb-16 md:pb-0;
+  }
+}
