@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { MapPin, ExternalLink } from "lucide-react";
+import { useParams, Link } from "react-router-dom";
+import { MapPin, ExternalLink, LayoutDashboard } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { creators } from "@/data/mockData";
