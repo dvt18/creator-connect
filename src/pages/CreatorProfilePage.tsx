@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { MapPin, ExternalLink } from "lucide-react";
+import { useParams, Link } from "react-router-dom";
+import { MapPin, ExternalLink, LayoutDashboard } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { creators } from "@/data/mockData";
@@ -36,6 +36,13 @@ export default function CreatorProfilePage() {
               </div>
               {role === "brand" && (
                 <Button className="gradient-primary text-primary-foreground border-0 shrink-0">Hire Creator</Button>
+              )}
+              {role === "creator" && (
+                <Link to="/creator-dashboard" className="md:hidden">
+                  <Button variant="outline" className="gap-2 shrink-0">
+                    <LayoutDashboard className="h-4 w-4" /> Dashboard
+                  </Button>
+                </Link>
               )}
             </div>
             <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-border">
