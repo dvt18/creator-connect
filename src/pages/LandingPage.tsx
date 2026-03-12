@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap, Users, Target, TrendingUp, Star, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { creators, campaigns } from "@/data/mockData";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -10,6 +11,12 @@ const fadeUp = {
 };
 
 export default function LandingPage() {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
