@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Compass, Bell, User, LayoutDashboard, Building2 } from "lucide-react";
+import { Home, Search, Bell, User, LayoutDashboard, Building2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function MobileBottomNav() {
