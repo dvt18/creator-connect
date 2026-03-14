@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Bell, User, LayoutDashboard, Building2 } from "lucide-react";
+import { Home, Search, Bell, User, LayoutDashboard, Building2, Megaphone } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function MobileBottomNav() {
@@ -11,7 +11,7 @@ export default function MobileBottomNav() {
   const creatorNav = [
     { to: "/feed", icon: Home, label: "Home" },
     { to: "/discover", icon: Search, label: "Discover" },
-    { to: "/creator-dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { to: "/campaigns", icon: Megaphone, label: "Campaigns" },
     { to: "/notifications", icon: Bell, label: "Alerts" },
     { to: "/profile/creator/1", icon: User, label: "Profile" },
   ];
