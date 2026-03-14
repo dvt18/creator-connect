@@ -304,7 +304,7 @@ export const feedPosts: FeedPost[] = [
     avatar: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop',
     timestamp: '4 hours ago',
     content: '🚀 New Campaign Alert! We\'re looking for 10 fitness creators to promote our new protein range. Budget: ₹1,50,000. Apply now on CreatorHub!',
-    image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2c4d8?w=600&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=400&fit=crop',
     likes: 892,
     comments: 64,
     shares: 128,
