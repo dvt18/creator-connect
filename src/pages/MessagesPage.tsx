@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Send, Paperclip } from "lucide-react";
-import { motion } from "framer-motion";
+import { Send, Paperclip, ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { conversations } from "@/data/mockData";
@@ -8,13 +8,17 @@ import Navbar from "@/components/Navbar";
 import PageTransition from "@/components/PageTransition";
 
 export default function MessagesPage() {
-  const [selected, setSelected] = useState(conversations[0]);
+  const [selected, setSelected] = useState<typeof conversations[0] | null>(null);
   const [msg, setMsg] = useState("");
-  const [localMessages, setLocalMessages] = useState(selected.messages);
+  const [localMessages, setLocalMessages] = useState(conversations[0].messages);
 
   const handleSelect = (conv: typeof conversations[0]) => {
     setSelected(conv);
     setLocalMessages(conv.messages);
+  };
+
+  const handleBack = () => {
+    setSelected(null);
   };
 
   const handleSend = () => {
@@ -23,6 +27,9 @@ export default function MessagesPage() {
     setMsg("");
   };
 
+  // Desktop: always show selected or first conversation
+  const desktopSelected = selected || conversations[0];
+
   return (
     <PageTransition>
       <div className="min-h-screen bg-background pb-mobile-nav">
@@ -30,13 +37,15 @@ export default function MessagesPage() {
         <div className="max-w-5xl mx-auto px-4 py-6">
           <h1 className="text-2xl font-bold text-foreground mb-6">Messages</h1>
           <div className="bg-card rounded-2xl shadow-card overflow-hidden flex" style={{ height: "calc(100vh - 180px)" }}>
-            <div className="w-72 border-r border-border overflow-y-auto hidden sm:block">
+            
+            {/* Conversation List - always visible on desktop, conditionally on mobile */}
+            <div className={`w-full sm:w-72 border-r border-border overflow-y-auto ${selected ? "hidden sm:block" : "block"}`}>
               {conversations.map((conv) => (
                 <button
                   key={conv.id}
                   onClick={() => handleSelect(conv)}
                   className={`w-full flex items-center gap-3 p-4 text-left hover:bg-secondary/50 transition-colors ${
-                    selected.id === conv.id ? "bg-secondary" : ""
+                    desktopSelected.id === conv.id && selected ? "bg-secondary" : ""
                   }`}
                 >
                   <img src={conv.avatar} alt={conv.sender} className="w-10 h-10 rounded-full object-cover shrink-0" />
@@ -54,13 +63,17 @@ export default function MessagesPage() {
               ))}
             </div>
 
-            <div className="flex-1 flex flex-col">
+            {/* Chat View - always visible on desktop, conditionally on mobile */}
+            <div className={`flex-1 flex flex-col ${selected ? "flex" : "hidden sm:flex"}`}>
               <div className="p-4 border-b border-border flex items-center gap-3">
-                <img src={selected.avatar} alt={selected.sender} className="w-8 h-8 rounded-full object-cover" />
-                <span className="font-semibold text-card-foreground text-sm">{selected.sender}</span>
+                <button onClick={handleBack} className="sm:hidden text-muted-foreground hover:text-foreground transition-colors">
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <img src={desktopSelected.avatar} alt={desktopSelected.sender} className="w-8 h-8 rounded-full object-cover" />
+                <span className="font-semibold text-card-foreground text-sm">{desktopSelected.sender}</span>
               </div>
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {localMessages.map((m, i) => (
+                {(selected ? localMessages : conversations[0].messages).map((m, i) => (
                   <motion.div
                     key={i}
                     className={`flex ${m.from === "You" ? "justify-end" : "justify-start"}`}
