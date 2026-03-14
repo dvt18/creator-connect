@@ -10,8 +10,8 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6 },
-  }),
+    transition: { delay: i * 0.12, duration: 0.6 }
+  })
 } as const;
 
 export default function HeroSection() {
@@ -25,9 +25,9 @@ export default function HeroSection() {
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+          backgroundSize: "60px 60px"
+        }} />
+      
 
       <div className="relative max-w-6xl mx-auto px-4 py-24 md:py-32 text-center z-10">
         <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
@@ -45,20 +45,20 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          custom={1}
-        >
+          custom={1}>
+          
           Where Brands
           <br />
           Meet{" "}
           <span className="relative inline-block">
-            <span className="bg-clip-text text-transparent gradient-primary">Creators</span>
+            <span className="bg-clip-text text-transparent gradient-primary px-0">Creators</span>
             <motion.span
               className="absolute -bottom-2 left-0 right-0 h-1.5 rounded-full gradient-primary"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transformOrigin: "left" }}
-            />
+              style={{ transformOrigin: "left" }} />
+            
           </span>
         </motion.h1>
 
@@ -67,8 +67,8 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          custom={2}
-        >
+          custom={2}>
+          
           Discover top creators, launch viral campaigns, and collaborate
           effortlessly — all in one powerful platform.
         </motion.p>
@@ -78,13 +78,13 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          custom={3}
-        >
+          custom={3}>
+          
           <Link to="/login">
             <Button
               size="lg"
-              className="gradient-primary text-primary-foreground border-0 gap-2 h-12 px-8 text-base rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-            >
+              className="gradient-primary text-primary-foreground border-0 gap-2 h-12 px-8 text-base rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+              
               Get Started Free <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
@@ -92,8 +92,8 @@ export default function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="gap-2 h-12 px-8 text-base rounded-xl border-border/60 hover:bg-secondary/80"
-            >
+              className="gap-2 h-12 px-8 text-base rounded-xl border-border/60 hover:bg-secondary/80">
+              
               <Play className="h-4 w-4" /> See How It Works
             </Button>
           </Link>
@@ -105,15 +105,15 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          custom={4}
-        >
+          custom={4}>
+          
           {[
-            { value: "10K+", label: "Active Creators" },
-            { value: "2.5K+", label: "Campaigns" },
-            { value: "500+", label: "Brands" },
-            { value: "₹50Cr+", label: "Paid Out" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
+          { value: "10K+", label: "Active Creators" },
+          { value: "2.5K+", label: "Campaigns" },
+          { value: "500+", label: "Brands" },
+          { value: "₹50Cr+", label: "Paid Out" }].
+          map((s) =>
+          <div key={s.label} className="text-center">
               <div className="text-2xl md:text-3xl font-extrabold text-foreground">
                 {s.value}
               </div>
@@ -121,9 +121,9 @@ export default function HeroSection() {
                 {s.label}
               </div>
             </div>
-          ))}
+          )}
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
