@@ -51,7 +51,7 @@ export default function HeroSection() {
           <br />
           Meet{" "}
           <span className="relative inline-block">
-            <span className="bg-clip-text gradient-primary mx-px my-px text-[#994ac4] bg-transparent px-[11px] py-[5px]">Creators</span>
+            <span className="bg-clip-text gradient-primary text-[#994ac4] bg-transparent py-0 px-0 mx-0 my-[5px]">Creators</span>
             <motion.span
               className="absolute -bottom-2 left-0 right-0 h-1.5 rounded-full gradient-primary"
               initial={{ scaleX: 0 }}
