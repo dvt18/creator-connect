@@ -1,3 +1,6 @@
+export type CreatorTier = 'Nano' | 'Micro' | 'Macro' | 'Celebrity';
+export type ApplicationStatus = 'none' | 'applied' | 'accepted' | 'rejected';
+
 export interface Creator {
   id: string;
   name: string;
@@ -5,12 +8,20 @@ export interface Creator {
   avatar: string;
   niche: string;
   followers: string;
+  followerCount: number; // numeric for tier calculation
   engagement: string;
   location: string;
   bio: string;
   platforms: string[];
   services: { name: string; price: string }[];
   portfolio: string[];
+  // Phase 1 additions
+  tier: CreatorTier;
+  credibilityScore: number; // 0-100
+  isVerified: boolean;      // KYC verified
+  isASCICompliant: boolean;
+  rating: number;           // 1-5 star average
+  completedCampaigns: number;
 }
 
 export interface Brand {
@@ -23,6 +34,7 @@ export interface Brand {
   activeCampaigns: number;
   pastCampaigns: number;
   description: string;
+  isVerified: boolean;
 }
 
 export interface Campaign {
@@ -38,6 +50,18 @@ export interface Campaign {
   requirements: string[];
   deliverables: string[];
   category: string;
+  // Phase 1 additions
+  status: 'active' | 'draft' | 'completed' | 'paused';
+  escrowAmount: string;
+  disclosureRequired: boolean;
+  contractStatus: 'pending' | 'signed' | 'not_required';
+  analytics: {
+    impressions: string;
+    engagementRate: string;
+    reach: string;
+    clicks: string;
+    estimatedROI: string;
+  };
 }
 
 export interface FeedPost {
@@ -66,12 +90,13 @@ export interface Message {
 
 export interface Notification {
   id: string;
-  type: 'invite' | 'application' | 'approval' | 'payment' | 'milestone';
+  type: 'invite' | 'application' | 'approval' | 'payment' | 'milestone' | 'contract' | 'compliance';
   title: string;
   description: string;
   time: string;
   read: boolean;
   avatar: string;
+  actionUrl?: string;
 }
 
 export const creators: Creator[] = [
@@ -82,6 +107,7 @@ export const creators: Creator[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     niche: 'Tech',
     followers: '120K',
+    followerCount: 120000,
     engagement: '6%',
     location: 'Delhi',
     bio: 'Tech reviewer & gadget enthusiast. Bringing you the latest in consumer technology.',
@@ -96,6 +122,12 @@ export const creators: Creator[] = [
       'https://images.unsplash.com/photo-1468436139062-f60a71c5c892?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=400&h=300&fit=crop',
     ],
+    tier: 'Micro',
+    credibilityScore: 92,
+    isVerified: true,
+    isASCICompliant: true,
+    rating: 4.8,
+    completedCampaigns: 24,
   },
   {
     id: '2',
@@ -104,6 +136,7 @@ export const creators: Creator[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
     niche: 'Fashion',
     followers: '80K',
+    followerCount: 80000,
     engagement: '5.5%',
     location: 'Mumbai',
     bio: 'Fashion & lifestyle creator. Curating trends and styling tips for the modern woman.',
@@ -118,6 +151,12 @@ export const creators: Creator[] = [
       'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=300&fit=crop',
     ],
+    tier: 'Micro',
+    credibilityScore: 87,
+    isVerified: true,
+    isASCICompliant: true,
+    rating: 4.6,
+    completedCampaigns: 18,
   },
   {
     id: '3',
@@ -126,6 +165,7 @@ export const creators: Creator[] = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
     niche: 'Fitness',
     followers: '200K',
+    followerCount: 200000,
     engagement: '7.2%',
     location: 'Bangalore',
     bio: 'Certified fitness trainer & nutrition coach. Transforming lives through health.',
@@ -140,6 +180,12 @@ export const creators: Creator[] = [
       'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop',
     ],
+    tier: 'Macro',
+    credibilityScore: 95,
+    isVerified: true,
+    isASCICompliant: true,
+    rating: 4.9,
+    completedCampaigns: 41,
   },
   {
     id: '4',
@@ -148,6 +194,7 @@ export const creators: Creator[] = [
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
     niche: 'Food',
     followers: '150K',
+    followerCount: 150000,
     engagement: '8.1%',
     location: 'Pune',
     bio: 'Home chef & food blogger. Sharing recipes that bring families together.',
@@ -162,6 +209,12 @@ export const creators: Creator[] = [
       'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=300&fit=crop',
     ],
+    tier: 'Macro',
+    credibilityScore: 88,
+    isVerified: true,
+    isASCICompliant: false,
+    rating: 4.7,
+    completedCampaigns: 29,
   },
   {
     id: '5',
@@ -170,6 +223,7 @@ export const creators: Creator[] = [
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
     niche: 'Travel',
     followers: '95K',
+    followerCount: 95000,
     engagement: '4.8%',
     location: 'Jaipur',
     bio: 'Travel photographer exploring India one state at a time.',
@@ -184,6 +238,12 @@ export const creators: Creator[] = [
       'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop',
     ],
+    tier: 'Micro',
+    credibilityScore: 74,
+    isVerified: false,
+    isASCICompliant: true,
+    rating: 4.3,
+    completedCampaigns: 11,
   },
 ];
 
@@ -198,6 +258,7 @@ export const brands: Brand[] = [
     activeCampaigns: 3,
     pastCampaigns: 12,
     description: 'Leading consumer electronics brand specializing in smartwatches and wearables.',
+    isVerified: true,
   },
   {
     id: '2',
@@ -209,6 +270,7 @@ export const brands: Brand[] = [
     activeCampaigns: 2,
     pastCampaigns: 8,
     description: 'Premium protein supplements and nutrition products for fitness enthusiasts.',
+    isVerified: true,
   },
   {
     id: '3',
@@ -220,6 +282,7 @@ export const brands: Brand[] = [
     activeCampaigns: 4,
     pastCampaigns: 15,
     description: 'Natural and organic skincare products for radiant, healthy skin.',
+    isVerified: false,
   },
 ];
 
@@ -237,6 +300,11 @@ export const campaigns: Campaign[] = [
     requirements: ['Must have 50K+ followers', 'Tech or gadget niche', 'High-quality content creation', 'Available for 2-week campaign'],
     deliverables: ['1 Instagram Reel (60 seconds)', '2 Instagram Stories', 'Mention product link in bio'],
     category: 'Tech',
+    status: 'active',
+    escrowAmount: '₹2,00,000',
+    disclosureRequired: true,
+    contractStatus: 'signed',
+    analytics: { impressions: '4.2M', engagementRate: '6.1%', reach: '3.8M', clicks: '28.4K', estimatedROI: '3.8x' },
   },
   {
     id: '2',
@@ -251,6 +319,11 @@ export const campaigns: Campaign[] = [
     requirements: ['Fitness niche creators', '30K+ followers', 'Authentic content style', 'Must use product genuinely'],
     deliverables: ['1 YouTube Video (5-10 min)', '3 Instagram Stories', '1 Instagram Post'],
     category: 'Fitness',
+    status: 'active',
+    escrowAmount: '₹1,50,000',
+    disclosureRequired: true,
+    contractStatus: 'pending',
+    analytics: { impressions: '2.1M', engagementRate: '7.4%', reach: '1.9M', clicks: '15.2K', estimatedROI: '4.2x' },
   },
   {
     id: '3',
@@ -265,6 +338,11 @@ export const campaigns: Campaign[] = [
     requirements: ['Beauty or lifestyle niche', '25K+ followers', 'Female audience preferred', 'Must follow skincare routine for 2 weeks'],
     deliverables: ['2 Instagram Reels', '5 Instagram Stories (over 2 weeks)', 'Before/after comparison post'],
     category: 'Beauty',
+    status: 'active',
+    escrowAmount: '₹3,00,000',
+    disclosureRequired: true,
+    contractStatus: 'signed',
+    analytics: { impressions: '6.8M', engagementRate: '8.9%', reach: '5.9M', clicks: '52.1K', estimatedROI: '5.1x' },
   },
   {
     id: '4',
@@ -279,6 +357,11 @@ export const campaigns: Campaign[] = [
     requirements: ['Travel or lifestyle niche', '40K+ followers', 'Stunning visual content', 'Willing to travel'],
     deliverables: ['1 YouTube Vlog', '2 Instagram Reels', '4 Instagram Stories'],
     category: 'Travel',
+    status: 'active',
+    escrowAmount: '₹1,75,000',
+    disclosureRequired: true,
+    contractStatus: 'not_required',
+    analytics: { impressions: '1.4M', engagementRate: '5.2%', reach: '1.2M', clicks: '9.8K', estimatedROI: '2.9x' },
   },
 ];
 
@@ -290,7 +373,7 @@ export const feedPosts: FeedPost[] = [
     username: 'rahulsharma',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     timestamp: '2 hours ago',
-    content: 'Just finished reviewing the TechNova Smartwatch Pro! Amazing battery life and the health tracking features are next level. Full review on my channel 🔗 #TechReview #Smartwatch',
+    content: 'Just finished reviewing the TechNova Smartwatch Pro! Amazing battery life and the health tracking features are next level. Full review on my channel 🔗 #TechReview #Smartwatch #Ad',
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop',
     likes: 2340,
     comments: 187,
@@ -316,7 +399,7 @@ export const feedPosts: FeedPost[] = [
     username: 'ananyamehta',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
     timestamp: '6 hours ago',
-    content: 'Loved collaborating with GlowSkin on this skincare routine! Their organic products are incredible ✨ Swipe to see my morning routine #Skincare #GlowSkin',
+    content: 'Loved collaborating with GlowSkin on this skincare routine! Their organic products are incredible ✨ Swipe to see my morning routine #Skincare #GlowSkin #Ad',
     image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=400&fit=crop',
     likes: 3120,
     comments: 234,
@@ -406,10 +489,12 @@ export const conversations: Message[] = [
 ];
 
 export const notifications: Notification[] = [
-  { id: '1', type: 'invite', title: 'Campaign Invitation', description: 'TechNova invited you to their Smartwatch Launch campaign.', time: '5 min ago', read: false, avatar: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop' },
-  { id: '2', type: 'application', title: 'New Application', description: 'Arjun Patel applied to your Protein Supplement campaign.', time: '1 hour ago', read: false, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face' },
-  { id: '3', type: 'approval', title: 'Campaign Approved', description: 'Your application for Skincare Routine Campaign was approved!', time: '2 hours ago', read: true, avatar: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=100&fit=crop' },
-  { id: '4', type: 'payment', title: 'Payment Received', description: 'You received ₹25,000 for YouTube Review completion.', time: '1 day ago', read: true, avatar: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop' },
-  { id: '5', type: 'milestone', title: 'Milestone Achieved', description: 'Congratulations! You completed 10 campaigns on CreatorHub.', time: '2 days ago', read: true, avatar: '' },
-  { id: '6', type: 'invite', title: 'Campaign Invitation', description: 'GlowSkin invited you to their Summer Glow campaign.', time: '3 days ago', read: true, avatar: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=100&fit=crop' },
+  { id: '1', type: 'invite', title: 'Campaign Invitation', description: 'TechNova invited you to their Smartwatch Launch campaign.', time: '5 min ago', read: false, avatar: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop', actionUrl: '/campaign/1' },
+  { id: '2', type: 'application', title: 'New Application', description: 'Arjun Patel applied to your Protein Supplement campaign.', time: '1 hour ago', read: false, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', actionUrl: '/brand-dashboard' },
+  { id: '3', type: 'approval', title: 'Application Approved ✅', description: 'Your application for Skincare Routine Campaign was approved!', time: '2 hours ago', read: false, avatar: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=100&fit=crop', actionUrl: '/campaign/3' },
+  { id: '4', type: 'payment', title: 'Payment Released 💰', description: 'You received ₹25,000 for YouTube Review completion. Check your earnings.', time: '1 day ago', read: true, avatar: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop', actionUrl: '/creator-dashboard' },
+  { id: '5', type: 'contract', title: 'Contract Ready to Sign', description: 'FitFuel Nutrition has sent a contract for Protein Campaign. Review and sign.', time: '1 day ago', read: true, avatar: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop', actionUrl: '/campaign/2' },
+  { id: '6', type: 'compliance', title: 'ASCI Disclosure Reminder', description: 'Your upcoming GlowSkin post must include #Ad or #Sponsored disclosure.', time: '2 days ago', read: true, avatar: '', actionUrl: '/campaign/3' },
+  { id: '7', type: 'milestone', title: 'Milestone Achieved 🏆', description: 'Congratulations! You completed 10 campaigns on CreatorHub.', time: '2 days ago', read: true, avatar: '' },
+  { id: '8', type: 'invite', title: 'Campaign Invitation', description: 'GlowSkin invited you to their Summer Glow campaign.', time: '3 days ago', read: true, avatar: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=100&fit=crop', actionUrl: '/campaigns' },
 ];
