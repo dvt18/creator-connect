@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 export default function FloatingOrbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Large primary orb */}
+      {/* Large cyan orb */}
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-20"
+        className="absolute w-[700px] h-[700px] rounded-full"
         style={{
-          background: "radial-gradient(circle, hsl(245 58% 51% / 0.4), transparent 70%)",
-          top: "-10%",
-          right: "-10%",
+          background: "radial-gradient(circle, hsl(187 96% 43% / 0.18), transparent 70%)",
+          top: "-15%",
+          right: "-15%",
         }}
         animate={{
           x: [0, 30, -20, 0],
@@ -18,11 +18,11 @@ export default function FloatingOrbs() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* Accent orb */}
+      {/* Teal accent orb */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full opacity-15"
+        className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          background: "radial-gradient(circle, hsl(280 60% 55% / 0.4), transparent 70%)",
+          background: "radial-gradient(circle, hsl(172 66% 40% / 0.15), transparent 70%)",
           bottom: "-5%",
           left: "-10%",
         }}
@@ -33,13 +33,13 @@ export default function FloatingOrbs() {
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* Small accent dot */}
+      {/* Blue center glow */}
       <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full opacity-10"
+        className="absolute w-[400px] h-[400px] rounded-full"
         style={{
-          background: "radial-gradient(circle, hsl(217 91% 60% / 0.5), transparent 70%)",
-          top: "40%",
-          left: "50%",
+          background: "radial-gradient(circle, hsl(199 89% 48% / 0.10), transparent 70%)",
+          top: "35%",
+          left: "45%",
         }}
         animate={{
           x: [0, 40, -30, 0],

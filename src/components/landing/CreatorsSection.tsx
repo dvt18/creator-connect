@@ -15,16 +15,15 @@ const fadeUp = {
 export default function CreatorsSection() {
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/40 via-secondary/20 to-transparent" />
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent" />
 
       <div className="relative max-w-6xl mx-auto px-4">
         <motion.div
           className="flex items-end justify-between mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+          viewport={{ once: true }}>
           <div>
             <span className="text-primary font-semibold text-sm uppercase tracking-widest">
               Featured
@@ -49,24 +48,23 @@ export default function CreatorsSection() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              custom={i}
-            >
+              custom={i}>
               <Link
                 to={`/profile/creator/${c.id}`}
-                className="group block bg-card rounded-2xl overflow-hidden shadow-card border border-border/50 hover:shadow-elevated transition-all duration-300"
-              >
+                className="group block glass-card rounded-2xl overflow-hidden hover:neon-border hover:shadow-elevated transition-all duration-300">
                 {/* Gradient header strip */}
                 <div className="h-20 gradient-primary relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/30 to-teal-600/50" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-40" />
                 </div>
                 <div className="px-6 pb-6 -mt-10 relative">
                   <img
                     src={c.avatar}
                     alt={c.name}
-                    className="w-16 h-16 rounded-xl object-cover border-4 border-card shadow-lg group-hover:scale-105 transition-transform duration-300"
+                    className="w-16 h-16 rounded-xl object-cover border-4 border-card shadow-lg group-hover:scale-105 group-hover:shadow-glow transition-all duration-300"
                   />
                   <div className="mt-3">
-                    <div className="font-bold text-card-foreground text-lg">
+                    <div className="font-bold text-foreground text-lg">
                       {c.name}
                     </div>
                     <div className="text-sm text-muted-foreground mb-3">
@@ -74,12 +72,12 @@ export default function CreatorsSection() {
                     </div>
                     <div className="flex items-center gap-4 text-sm">
                       <div className="flex items-center gap-1">
-                        <span className="font-bold text-card-foreground">
+                        <span className="font-bold text-foreground">
                           {c.followers}
                         </span>
                         <span className="text-muted-foreground">followers</span>
                       </div>
-                      <div className="flex items-center gap-1 text-emerald-600">
+                      <div className="flex items-center gap-1 text-cyan-400">
                         <TrendingUp className="h-3.5 w-3.5" />
                         <span className="font-semibold">{c.engagement}</span>
                       </div>

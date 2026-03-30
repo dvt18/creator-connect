@@ -20,8 +20,7 @@ export default function CampaignsSection() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+          viewport={{ once: true }}>
           <span className="text-primary font-semibold text-sm uppercase tracking-widest">
             Opportunities
           </span>
@@ -41,20 +40,18 @@ export default function CampaignsSection() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
-              custom={i}
-            >
+              custom={i}>
               <Link
                 to={`/campaign/${c.id}`}
-                className="group block bg-card rounded-2xl p-6 shadow-card border border-border/50 hover:shadow-elevated hover:border-primary/20 transition-all duration-300"
-              >
+                className="group block glass-card rounded-2xl p-6 hover:neon-border hover:shadow-elevated transition-all duration-300">
                 <div className="flex items-start gap-4 mb-4">
                   <img
                     src={c.brandLogo}
                     alt={c.brandName}
-                    className="w-12 h-12 rounded-xl object-cover shadow-sm"
+                    className="w-12 h-12 rounded-xl object-cover shadow-sm border border-border/50"
                   />
                   <div className="flex-1">
-                    <div className="font-bold text-card-foreground text-lg group-hover:text-primary transition-colors">
+                    <div className="font-bold text-foreground text-lg group-hover:text-primary transition-colors">
                       {c.title}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -71,7 +68,7 @@ export default function CampaignsSection() {
                   ].map((tag, ti) => (
                     <span
                       key={ti}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary/80 rounded-lg px-3 py-1.5"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-cyan-400/80 bg-primary/10 border border-primary/10 rounded-lg px-3 py-1.5"
                     >
                       <tag.icon className="h-3.5 w-3.5" />
                       {tag.text}
